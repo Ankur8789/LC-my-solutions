@@ -16,7 +16,7 @@ public:
     {   int mn=INT_MIN;
        for(int i=0;i<c.size();i++)
          mn=max(mn,c[i]);
-        ll l=1,r=mn;
+        ll l=1,r=1e10;
          ll ans=0;
         while(l<=r)
         {
