@@ -5,20 +5,15 @@ public:
     bool check(ll mid,vector<int>& w,int d)
     {
         ll cc=0,sum=0;
-        for(ll i=0;i<w.size();i++)
-        {  if(w[i]>mid)
+        for(auto t: w)
+        {  if(t>mid)
             return false;
-            sum+=w[i];
+            sum+=t;
             if(sum>mid)
             {
-                cc++;
-                sum=w[i];
+               cc++;
+                sum=t;
             }
-            // else if(sum==mid)
-            // {
-            //     sum=0;
-            //     cc++;
-            // }
         }
         if(sum)
             cc++;
