@@ -1,19 +1,19 @@
 class Solution {
 public:
-    static bool cmp(vector<int>&a ,vector<int>& b)
+    static bool cmp(vector<int>& a,vector<int>& b)
     {
         return a[1]<b[1];
     }
-    int findMinArrowShots(vector<vector<int>>& v)
+    int findMinArrowShots(vector<vector<int>>& p) 
     {
-        sort(v.begin(),v.end(),cmp);
-        int x=v[0][1],cnt=1;
-        for(int i=1;i<v.size();i++)
+        sort(p.begin(),p.end(),cmp);
+        int cnt=1,x=p[0][1];
+        for(int i=1;i<p.size();i++)
         {
-            if(v[i][0]>x)
+            if(p[i][0]>x)
             {
-                cnt++;
-                x=v[i][1];
+                ++cnt;
+                x=p[i][1];
             }
         }
         return cnt;
