@@ -1,41 +1,30 @@
-class Solution 
-{
+class Solution {
 public:
-int t[100001][5];
-int f(int i,int x,string& s)
+    int minFlipsMonoIncr(string s) 
     {
-        if(i==s.length())
-        return 0;
-        if(t[i][x]!=-1)
-        return t[i][x];
-        if(x==1)
-        {  int a=0,b=0,c=0;
-           if(s[i]=='0')
-           {
-              a=f(i+1,x,s);
-              b=f(i+1,0,s);
-              c=1+f(i+1,0,s);
-              return t[i][x]=min({a,b,c});
-           }
-           else
-           {
-               a=f(i+1,x,s)+1;
-               b=1+f(i+1,0,s);
-               c=f(i+1,0,s);
-               return t[i][x]=min({a,b,c});
-           }
-        }
-        else
+        int zr=0,on=0;
+        for(auto t: s)
         {
-            if(s[i]=='0')
-            return t[i][x]= 1+f(i+1,x,s);
-            else
-            return t[i][x]=f(i+1,x,s);
+            if(t=='0')zr++;
+            else on++;
         }
-    }
-    int minFlipsMonoIncr(string s)
-     {  memset(t,-1,sizeof(t));
-        int x=f(0,1,s);
-        return x;
+        int ans=INT_MAX;
+        int zrc=0,onc=0;
+        for(auto t: s)
+        {
+           if(t=='0')
+           {
+              ans=min(ans,onc+zr-zrc-1);
+              ans=min(ans,1+onc+zr-zrc-1);
+           }
+            else
+            {
+                ans=min(ans,onc+zr-zrc);
+                ans=min(ans,onc+1+zr-zrc);
+            }
+            if(t=='0')zrc++;
+            else onc++;
+        }
+        return ans;
     }
 };
