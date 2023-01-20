@@ -45,7 +45,8 @@ public:
                     q1.push(t);
             }
         }
-       
+       if(temp.size()!=n)
+           return ans;
         
         vector<ll> hex;
         queue<ll> q2;
@@ -80,7 +81,8 @@ public:
             
             
         }
-       
+        if(hex.size()!=m)
+            return ans;
         map<ll,vector<ll>> mp;
         for(ll i=0;i<temp.size();i++)
             mp[grp[temp[i]]].push_back(temp[i]);
@@ -89,11 +91,11 @@ public:
             for(ll j=0;j<mp[hex[i]].size();j++)
                 ans.push_back(mp[hex[i]][j]);
         }
-        for(auto t: temp)cout<<t<<" ";
-        cout<<endl;
-        for(auto t: hex)cout<<t<<" ";
-        cout<<endl;
-        for(auto t: ans)cout<<t<<" ";
+        // for(auto t: temp)cout<<t<<" ";
+        // cout<<endl;
+        // for(auto t: hex)cout<<t<<" ";
+        // cout<<endl;
+        // for(auto t: ans)cout<<t<<" ";
         if(ans.size()!=n)
             return {};
         return ans;
