@@ -18,18 +18,18 @@ public:
             ans.push_back(temp);
             return ;
         }
-        if(i==s.length()-1)
-        {
-            if(p(s.substr(i)))
-            {
+//         if(i==s.length()-1)
+//         {
+//             if(p(s.substr(i)))
+//             {
                
-                temp.push_back(s.substr(i));
-                ans.push_back(temp);
-                temp.pop_back();
+//                 temp.push_back(s.substr(i));
+//                 ans.push_back(temp);
+//                 temp.pop_back();
                 
-            }
-            return ;
-        }
+//             }
+//             return ;
+//         }
         for(int idx=i;idx<s.length();idx++)
         {
             if(p(s.substr(i,idx-i+1)))
