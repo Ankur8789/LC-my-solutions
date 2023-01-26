@@ -3,7 +3,7 @@ public:
     typedef long long ll;
     vector<pair<ll,double>> adj[10001];
     double pb[10001];
-    
+    ll vis[10001];
     double maxProbability(int n, vector<vector<int>>& edges, vector<double>& sp, int start, int end) 
     {
         for(ll i=0;i<sp.size();i++)
@@ -20,6 +20,9 @@ public:
             auto it=ms.end();
             it--;
             ms.erase(it);
+            if(vis[p.second]==1)
+                continue;
+            vis[p.second]=1;
             double x=p.first;
             ll y=p.second;
             
