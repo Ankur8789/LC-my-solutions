@@ -21,9 +21,9 @@ public:
         {
             pair<int,int> p=*ms.begin();
             ms.erase(ms.begin());
-            if(vis[p.second]==1)
-                continue;
-            vis[p.second]=1;
+            // if(vis[p.second]==1)
+            //     continue;
+            // vis[p.second]=1;
             for(auto t: adj[p.second])
             {
                 int a=t.first;
