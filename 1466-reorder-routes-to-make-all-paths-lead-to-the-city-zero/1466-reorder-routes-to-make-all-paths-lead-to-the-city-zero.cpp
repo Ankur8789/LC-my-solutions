@@ -1,5 +1,6 @@
 class Solution {
 public:
+    //0/1 bfs
     typedef long long ll;
     vector<pair<ll,ll>> adj[100001];
     ll vis[100001];
