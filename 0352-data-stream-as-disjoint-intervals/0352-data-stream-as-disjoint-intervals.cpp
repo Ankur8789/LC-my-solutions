@@ -1,3 +1,7 @@
+#define fastio()                      \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);                    \
+    cout.tie(NULL);
 class SummaryRanges {
 public:
     set<int> ms;
@@ -14,7 +18,8 @@ public:
     
     vector<vector<int>> getIntervals() 
     {
-         set<int> s=ms;
+         fastio(); 
+        set<int> s=ms;
         vector<vector<int>> ans;
         while(s.size()>0)
         {
