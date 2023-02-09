@@ -1,9 +1,13 @@
+#define fastio()                      \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);                    \
+    cout.tie(NULL);
 class Solution {
 public:
     typedef long long ll;
     typedef string str;
     long long distinctNames(vector<string>& ideas)
-    {
+    {  fastio();
         map<char,set<str>> mp;
         for(auto t: ideas)
         {
