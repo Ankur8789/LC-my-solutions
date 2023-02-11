@@ -1,46 +1,47 @@
 class Solution {
 public:
-    vector<int> shortestAlternatingPaths(int n, vector<vector<int>>& r, vector<vector<int>>& b)
-    {
-        vector<vector<pair<int,int>>>v(n);
-        vector<vector<int>>dis(n,vector<int>(2,1e9));
-        queue<pair<int,int>>q;
-        
-        for(auto i:r)
-        {
-            v[i[0]].push_back({i[1],0});
-        }
-        for(auto i:b)
-        {
-            v[i[0]].push_back({i[1],1});
-        }
+    typedef long long ll;
+    vector<pair<ll,ll>> adj[101];
+    
+    vector<int> shortestAlternatingPaths(int n, vector<vector<int>>& re, vector<vector<int>>& be) 
+    {  vector<vector<ll>> dis(n,vector<ll>(2,1e5));
+        for(ll i=0;i<re.size();i++)
+            adj[re[i][0]].push_back({re[i][1],0});
+        for(ll i=0;i<be.size();i++)
+            adj[be[i][0]].push_back({be[i][1],1});
+        queue<pair<ll,ll>> q;
         dis[0][0]=0;
         dis[0][1]=0;
         q.push({0,0});
         q.push({0,1});
-        while(!q.empty())
+        while(q.size()>0)
         {
-            auto it=q.front();
+            pair<ll,ll> p=q.front();
             q.pop();
-            int node=it.first,color=it.second;
-            for(auto i:v[node])
+            ll node=p.first;
+            ll col=p.second;
+            for(auto t: adj[node])
             {
-                int new_node=i.first,new_color=i.second;
-                if(dis[new_node][new_color]>dis[node][color]+1 && color!=new_color)
+                ll newnode=t.first;
+                ll newcol=t.second;
+                if(dis[newnode][newcol]>dis[node][col]+1 && newcol!=col)
                 {
-                    dis[new_node][new_color]=dis[node][color]+1;
-                    q.push(i);
+                    dis[newnode][newcol]=dis[node][col]+1;
+                    q.push(t);
                 }
             }
         }
-        vector<int>ans;
-        for(int i=0;i<n;i++)
+        vector<int> ans(n);
+        for(ll i=0;i<n;i++)
         {
-            int temp=min(dis[i][0],dis[i][1]);
-            if(temp==1e9)
-               temp=-1;
-            ans.push_back(temp);   
+            ll mn=min(dis[i][0],dis[i][1]);
+            if(mn==1e5)
+                ans[i]=-1;
+            else
+                ans[i]=mn;
+            
         }
         return ans;
+        
     }
 };
