@@ -1,40 +1,42 @@
 class Solution {
 public:
-    int ladderLength(string bg, string ed, vector<string>& wl)
+    int ladderLength(string sw, string ew, vector<string>& wordList)
     {
         set<string> s;
-        for(auto t: wl)
-            s.insert(t);
-        if(s.find(ed)==s.end() || bg==ed)
+        for(auto t:wordList)s.insert(t);
+        if(s.find(ew)==s.end())
             return 0;
-        if(s.find(bg)!=s.end())
-            s.erase(bg);
-        queue<pair<string,int>> q;
-        q.push({bg,1});
-        //int cnt=1;
+        queue<string> q;
+        q.push(sw);
+        s.erase(sw);
+        int lvl=1;
         while(q.size()>0)
-        {
-           string str=q.front().first;
-            int x=q.front().second;
-            q.pop();
-            if(str==ed)
-                        return x;
-            for(int i=0;i<str.length();i++)
+        {  
+            int sz=q.size();
+            while(sz--)
             {
-                char org=str[i];
-                for(char ch='a';ch<='z';ch++)
+                string temp=q.front();
+                q.pop();
+                for(int i=0;i<temp.size();i++)
                 {
-                    str[i]=ch;
-                    
-                    if(s.find(str)!=s.end())
+                    char prev=temp[i];
+                    for(char ch='a';ch<='z';ch++)
                     {
-                        q.push({str,x+1});
-                        s.erase(str);
+                        temp[i]=ch;
+                        if(temp==ew)
+                            return lvl+1;
+                        if(ch==prev)
+                            continue;
+                        if(s.find(temp)!=s.end())
+                        {
+                            q.push(temp);
+                            s.erase(temp);
+                        }
                     }
-                    
+                    temp[i]=prev;
                 }
-                str[i]=org;
             }
+            lvl++;
         }
         return 0;
     }
