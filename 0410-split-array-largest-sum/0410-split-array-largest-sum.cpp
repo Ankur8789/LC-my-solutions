@@ -1,3 +1,7 @@
+#define fastio()                      \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);                    \
+    cout.tie(NULL);
 typedef long long ll;
 class Solution {
 public:
@@ -25,6 +29,7 @@ public:
     }
     int splitArray(vector<int>& nums, int k) 
     {     
+       fastio();
         ll n=nums.size();
         vector<ll> pre(n);
         ll sm=0;
