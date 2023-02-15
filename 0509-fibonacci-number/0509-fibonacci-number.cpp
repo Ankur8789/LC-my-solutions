@@ -7,7 +7,7 @@ public:
             return n;
         if(dp[n]!=-1)
             return dp[n];
-        return dp[n]=fib(n-1)+fib(n-2);
+        return dp[n]=f(n-1)+f(n-2);
     }
     int fib(int n) 
     {
