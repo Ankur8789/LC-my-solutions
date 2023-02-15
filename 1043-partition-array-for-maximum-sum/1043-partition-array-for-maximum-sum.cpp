@@ -1,3 +1,7 @@
+#define fastio()                      \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);                    \
+    cout.tie(NULL);
 class Solution {
 public:
     typedef long long ll;
@@ -21,7 +25,8 @@ public:
        
     }
     int maxSumAfterPartitioning(vector<int>& arr, int k) 
-    {  memset(dp,-1,sizeof(dp));
+    {  fastio();
+        memset(dp,-1,sizeof(dp));
        int ans=f(0,k,arr);
         return ans;
     }
