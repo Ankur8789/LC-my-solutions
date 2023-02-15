@@ -1,3 +1,7 @@
+#define fastio()                      \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);                    \
+    cout.tie(NULL);
 class Solution {
 public:
     int dp[2001];
@@ -27,7 +31,8 @@ public:
         return dp[i]=ans;
     }
     int minCut(string s) 
-    {  memset(dp,-1,sizeof(dp));memset(t,-1,sizeof(t));
+    {  fastio();
+        memset(dp,-1,sizeof(dp));memset(t,-1,sizeof(t));
        int ans=f(0,s);
         return ans;
     }
