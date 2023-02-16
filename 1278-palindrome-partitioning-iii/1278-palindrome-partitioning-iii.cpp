@@ -1,43 +1,43 @@
+typedef long long ll;
 class Solution {
 public:
-    typedef long long ll;
-    int dp[101][101];
-    ll p(string s)
+    ll dp[101][101];
+    ll t(string s)
     {
-        ll n=s.length();
         ll cc=0;
+        ll n=s.length();
         for(ll i=0;i<n/2;i++)
         {
             if(s[i]!=s[n-i-1])
-                cc++;        
-        }
+                ++cc;
+        }    
         return cc;
+        
     }
     ll f(ll i,ll k,string s)
     {
-        if(i==s.length())
+        if(i>=s.length())
         {
             if(k==0)
                 return 0;
             else
-                return INT_MAX-1;
+                return 1e5;
         }
         if(k==0)
-            return INT_MAX-1;
+            return 1e5;
         if(dp[i][k]!=-1)
             return dp[i][k];
-        ll ans=INT_MAX;
-       for(ll idx=i;idx<s.length();idx++)
-       {
-            ll temp=p(s.substr(i,idx-i+1));
-           ans=min(ans,temp+f(idx+1,k-1,s));
-       }
-        return dp[i][k]=ans;
-        
+        ll ans=1e5;
+        for(ll idx=i;idx<s.length();idx++)
+        {
+            ll x=t(s.substr(i,idx-i+1));
+            ans=min(ans,x+f(idx+1,k-1,s));
+        }
+        return  dp[i][k]=ans;
     }
     int palindromePartition(string s, int k) 
     {
-       memset(dp,-1,sizeof(dp));
+        memset(dp,-1,sizeof(dp));
         ll ans=f(0,k,s);
         return ans;
     }
