@@ -1,3 +1,7 @@
+#define fastio()                      \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);                    \
+    cout.tie(NULL);
 typedef long long ll;
 class Solution {
 public:
@@ -37,6 +41,7 @@ public:
     }
     int palindromePartition(string s, int k) 
     {
+        fastio();
         memset(dp,-1,sizeof(dp));
         ll ans=f(0,k,s);
         return ans;
