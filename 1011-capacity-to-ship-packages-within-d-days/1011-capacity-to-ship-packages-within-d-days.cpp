@@ -1,6 +1,5 @@
 class Solution {
 public:
-    
     typedef long long ll;
     bool check(ll mid,vector<int>& w,int d)
     {
