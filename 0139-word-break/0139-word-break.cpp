@@ -16,10 +16,11 @@ public:
             if(st.find(temp)==st.end())
                 continue;
             bool x=f(idx+1,s,st);
-            ans|=x;
+           if(x)
+               return dp[i]=true;
            
         }
-        return dp[i]=ans;
+        return dp[i]=false;
     }
     bool wordBreak(string s, vector<string>& wordDict)
     {
