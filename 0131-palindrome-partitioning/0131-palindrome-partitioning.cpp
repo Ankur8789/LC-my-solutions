@@ -18,26 +18,16 @@ public:
             ans.push_back(temp);
             return ;
         }
-//         if(i==s.length()-1)
-//         {
-//             if(p(s.substr(i)))
-//             {
-               
-//                 temp.push_back(s.substr(i));
-//                 ans.push_back(temp);
-//                 temp.pop_back();
-                
-//             }
-//             return ;
-//         }
-        for(int idx=i;idx<s.length();idx++)
+        string st="";
+     for(int idx=i;idx<s.length();idx++)
         {
-            if(p(s.substr(i,idx-i+1)))
-            {
-                temp.push_back(s.substr(i,idx-i+1));
-                f(idx+1,temp,ans,s,str);
-                temp.pop_back();
-            }
+            st+=s[idx];
+           if(p(st))
+           {
+              temp.push_back(st);
+               f(idx+1,temp,ans,s,str);
+               temp.pop_back();
+           }
         }
     }
     vector<vector<string>> partition(string s)
