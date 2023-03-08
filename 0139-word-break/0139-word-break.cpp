@@ -1,3 +1,4 @@
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL); 
 class Solution {
 public:
     int dp[301];
@@ -22,6 +23,7 @@ public:
     }
     bool wordBreak(string s, vector<string>& wordDict)
     {
+        fastio();
         unordered_set<string> st;
         for(auto t:wordDict)
             st.insert(t);
