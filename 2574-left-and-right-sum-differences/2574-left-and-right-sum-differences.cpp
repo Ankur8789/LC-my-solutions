@@ -1,16 +1,31 @@
 class Solution {
 public:
-    vector<int> leftRigthDifference(vector<int>& nums) 
+    vector<int> leftRigthDifference(vector<int> &nums)
     {
-        int lsum=0,rsum=0;
-        for(auto t: nums)rsum+=t;
-        vector<int> ans;
-        for(int i=0;i<nums.size();i++)
+        vector<int> v;
+        vector<int> l;
+        vector<int> r;
+
+        // l.push_back(0);
+        // l.push_back(nums[0]);
+        int i = 0;
+        while (i < nums.size())
         {
-            rsum-=nums[i];
-            ans.push_back(abs(lsum-rsum));
-            lsum+=nums[i];
+            int a = 0, b = 0;
+            for (int j = 0; j < i; j++)
+                a += nums[j];
+            l.push_back(a);
+            for (int j = i + 1; j < nums.size(); j++)
+                b += nums[j];
+            r.push_back(b);
+            i++;
         }
-        return ans;
+        r.push_back(0);
+        for (int i = 0; i < nums.size(); i++)
+        {
+            v.push_back(abs(l[i] - r[i]));
+        }
+
+        return v;
     }
 };
