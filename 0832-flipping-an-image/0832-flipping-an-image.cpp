@@ -6,14 +6,14 @@ public:
          {
              reverse(image[i].begin(),image[i].end());
          }
-         for(auto& t: image)
+         for(int i=0;i<image.size();i++)
          {
-             for(auto& x: t)
+             for(int j=0;j<image[0].size();j++)
              {
-                 if(x==1)
-                     x=0;
+                 if(image[i][j]==1)
+                     image[i][j]=0;
                  else
-                     x=1;
+                     image[i][j]=1;
              }
          }
         return image;
