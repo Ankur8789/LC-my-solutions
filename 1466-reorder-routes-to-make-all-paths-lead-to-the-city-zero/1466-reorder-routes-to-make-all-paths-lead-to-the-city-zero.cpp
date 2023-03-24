@@ -1,6 +1,7 @@
 class Solution {
 public:
     //0/1 bfs
+    //kyu zero se shuru kar re hai ye socho....
     typedef long long ll;
     vector<pair<ll,ll>> adj[100001];
     ll vis[100001];
