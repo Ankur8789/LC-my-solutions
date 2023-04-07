@@ -1,37 +1,47 @@
+typedef long long ll;
+ll parent[200001];
+ll siz[200001];
+void make(ll v)
+{
+    parent[v] = v;
+    siz[v] = 1;
+}
+ll find(ll v)
+{
+    if (parent[v] == v)
+        return v;
+    else // path compresssion
+        return parent[v] = find(parent[v]);
+}
+void Union(ll a, ll b)
+{
+    a = find(a);
+    b = find(b);
+    if (a != b)
+    { // union by size
+        if (siz[a] < siz[b])
+            swap(a, b);
+        parent[b] = a;
+        siz[a] += siz[b];
+    }
+}
 class Solution {
 public:
-    vector<int> adj[100001];
-    int vis[100001];
-    void dfs(int x)
+    int makeConnected(int n, vector<vector<int>>& cn) 
     {
-        vis[x]=1;
-        for(auto t: adj[x])
-        {
-            if(vis[t]==0)
-                dfs(t);
-        }
-    }
-    int makeConnected(int n, vector<vector<int>>& cc) 
-    {
-        for(auto t: cc)
-        {
-            adj[t[0]].push_back(t[1]);
-            adj[t[1]].push_back(t[0]);
-        }
-        int op=0;
-        for(int i=0;i<n;i++)
-        {
-            if(vis[i]==0)
-            {
-                dfs(i);
-                ++op;
-            }
-        }
-        
-        if(cc.size()>=n-1)
-            return op-1;
-        else
+        // we need n-1 edges for n vertices
+        if(cn.size()<n-1)
             return -1;
-        
+        for(ll i=0;i<n;i++)
+            make(i);
+        for(auto t: cn)
+         Union(t[0],t[1]);
+        ll cc=0;
+        for(ll i=0;i<n;i++)
+        {
+            if(parent[i]==i)
+                cc++;
+        }
+        return --cc;
     }
 };
