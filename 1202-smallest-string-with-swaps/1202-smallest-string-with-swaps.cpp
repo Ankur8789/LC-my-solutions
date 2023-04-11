@@ -47,7 +47,7 @@ public:
         ans.resize(n);
         for(ll i=0;i<n;i++)
         {
-           ll a=find(i);
+           ll a=parent[i];
             ans[i]=*ms[a].begin();
             ms[a].erase(ms[a].begin());
         }
