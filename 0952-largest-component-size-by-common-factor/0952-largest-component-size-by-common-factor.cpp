@@ -1,3 +1,7 @@
+#define fastio()                      \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);                    \
+    cout.tie(NULL);
 typedef long long ll;
 ll parent[2000001];
 ll siz[2000001];
