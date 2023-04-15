@@ -1,25 +1,25 @@
 class Solution {
 public:
-    int dp[301][301];
+    int dp[305][305];
     int f(int i,int j,vector<int>& nums)
     {
-        if(i>j)
+        if(i+1==j)
             return 0;
         if(dp[i][j]!=-1)
             return dp[i][j];
-        int ans=INT_MIN;
-        for(int idx=i;idx<=j;idx++)
+        int ans=0;
+        for(int idx=i+1;idx<j;idx++)
         {
-            ans=max(ans,nums[idx]*nums[i-1]*nums[j+1]+f(i,idx-1,nums)+f(idx+1,j,nums));
+            ans=max(ans,nums[i]*nums[j]*nums[idx]+f(i,idx,nums)+f(idx,j,nums));
         }
         return dp[i][j]=ans;
-    }
-    int maxCoins(vector<int>& nums)
-    {   memset(dp,-1,sizeof(dp));
-        int n=nums.size();
+    }    
+    int maxCoins(vector<int>& nums) 
+    {
         nums.push_back(1);
         nums.insert(nums.begin(),1);
-        int ans=f(1,n,nums);
+        memset(dp,-1,sizeof(dp));
+        int ans=f(0,nums.size()-1,nums);
         return ans;
     }
 };
