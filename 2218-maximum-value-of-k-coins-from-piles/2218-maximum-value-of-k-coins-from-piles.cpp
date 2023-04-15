@@ -1,8 +1,10 @@
 class Solution {
 public:
-    int dp[1001][2001];
+    int dp[2001][2001];
     int f(int i,int k,vector<vector<int>>& piles)
-    {
+    {  
+        if(k<0)
+            return -1e9;
         if(k==0)
             return 0;
         if(i==piles.size())
@@ -13,9 +15,7 @@ public:
         ans=max(ans,f(i+1,k,piles));
         int sum=0;
         for(int idx=0;idx<piles[i].size();idx++)
-        {
-            if(idx+1>k)
-                break;
+        {  
             sum+=piles[i][idx];
             ans=max(ans,sum+f(i+1,k-idx-1,piles));
         }
