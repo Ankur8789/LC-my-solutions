@@ -1,24 +1,24 @@
 class Solution {
 public:
     int dp[51][51];
-    int f(int i,int j,vector<int>&v)
+    int f(int i,int j,vector<int>& val)
     {
-        if(j==i+1)
+        if(i==j-1)
             return 0;
         if(dp[i][j]!=-1)
             return dp[i][j];
         int ans=INT_MAX;
         for(int idx=i+1;idx<j;idx++)
         {
-            ans=min(ans,v[i]*v[j]*v[idx]+f(i,idx,v)+f(idx,j,v));
+            ans=min(ans,val[i]*val[j]*val[idx]+f(i,idx,val)+f(idx,j,val));
         }
         return dp[i][j]=ans;
+
     }
-    int minScoreTriangulation(vector<int>& v)
-    {   
-        int n=v.size();
+    int minScoreTriangulation(vector<int>& values)
+    {
         memset(dp,-1,sizeof(dp));
-         int ans=f(0,n-1,v);
+        int ans=f(0,values.size()-1,values);
         return ans;
     }
 };
