@@ -12,6 +12,7 @@
 class Solution {
 public:
     map<pair<TreeNode*,int>,int> mp;
+    // nice dp on trees
     int f(TreeNode* root,int liya)
     {
        if(root==nullptr)
