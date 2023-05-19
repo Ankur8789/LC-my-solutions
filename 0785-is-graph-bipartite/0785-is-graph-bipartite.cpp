@@ -3,23 +3,20 @@ public:
     unordered_map<int,vector<int>> adj;
     int col[101];
     int vis[101];
-    bool dfs(int v,int c)
+    bool dfs(int x,int c)
     {
-       vis[v]=1;
-        col[v]=c;
-        for(int i=0;i<adj[v].size();i++)
+       vis[x]=1;
+        col[x]=c;
+        for(auto t: adj[x])
         {
-            if(vis[adj[v][i]]==0)
+            if(vis[t]==0)
             {
-               if(dfs(adj[v][i],c^1)==false)
-                   return false;
-            }
-            else
-            {
-                if(col[adj[v][i]]==c)
+                bool h=dfs(t,c^1);
+                if(!h)
                     return false;
             }
-                
+            else if(col[x]==col[t])
+             return false;
         }
         return true;
     }
