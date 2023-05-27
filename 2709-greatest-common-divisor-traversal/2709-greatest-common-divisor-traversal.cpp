@@ -6,7 +6,7 @@ typedef long long ll;
 ll mxele;
 ll parent[100001];
 ll siz[100001];
-
+//case of one ne fasa diya
 void make(ll v)
 {
     parent[v] = v;
@@ -66,10 +66,11 @@ void Union(ll a, ll b)
                }
             }
         }
-        
         unordered_set<ll> st;
         for(ll i=0;i<nums.size();i++)
         {
+           if(nums[i]==1)
+               continue;
            st.insert(find(nums[i]));
         }
         return st.size()==1;
