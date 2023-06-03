@@ -11,13 +11,13 @@ public:
     }
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) 
     {
-        queue<pair<int,int>> q;
+        queue<pair<int,pair<int,int>>> q;
         int m=grid.size();
         int n=grid[0].size();
         if(grid[0][0]==1)
             return -1;
         vector<vector<int>> dis(m,vector<int>(n,1e9));
-        q.push({0,0});
+        q.push({1,{0,0}});
         dis[0][0]=1;
         while(q.size()>0)
         {
@@ -25,12 +25,12 @@ public:
             q.pop();
             for(int i=0;i<8;i++)
             {
-                int nx=x.first+dir[i][0];
-                int ny=x.second+dir[i][1];
-                if(check(nx,ny,m,n,grid) && (dis[nx][ny]>dis[x.first][x.second]+1))
+                int nx=x.second.first+dir[i][0];
+                int ny=x.second.second+dir[i][1];
+                if(check(nx,ny,m,n,grid) && (dis[nx][ny]>x.first+1))
                 {
-                    dis[nx][ny]=dis[x.first][x.second]+1;
-                    q.push({nx,ny});
+                    dis[nx][ny]=x.first+1;
+                    q.push({dis[nx][ny],{nx,ny}});
                 }
             }
         }
