@@ -1,36 +1,42 @@
 class Solution {
 public:
-    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K) {
-        vector<pair<int,int>> adj[n];
-        for(auto it : flights){
-            adj[it[0]].push_back({it[1],it[2]});
+    unordered_map<int,vector<pair<int,int>>> adj;
+    int findCheapestPrice(int n, vector<vector<int>>& fli, int src, int dst, int k)
+    {
+        for(auto t:fli)
+        {
+            adj[t[0]].push_back({t[1],t[2]});
         }
-
-        vector<int> dist(n,1e9);
-        dist[src] =0;
-        queue<pair<int,pair<int,int>>> q;
-        q.push({0,{src,0}});
-
-        while(!q.empty()){
-            int stop = q.front().first;
-            int node = q.front().second.first;
-            int cost = q.front().second.second;
+        vector<int> dis(n,1e9);
+        dis[src]=0;
+        queue<vector<int>> q;
+        q.push({0,src,0});
+        while(q.size()>0)
+        {
+            auto x=q.front();
             q.pop();
-            
-            if(stop > K) continue;
-
-            for(auto it : adj[node]){
-                int adjNode = it.first;
-                int weight = it.second;
-
-                if(cost + weight < dist[adjNode] && stop <= K){
-                    dist[adjNode] = cost + weight;
-                    q.push({stop+1,{adjNode,dist[adjNode]}});
+            if(x[0]>k)
+                continue;
+            for(auto t: adj[x[1]])
+            {
+                int u=x[1];
+                int v=t.first;
+                int wt=t.second;
+                int lc=x[2];
+                int st=x[0];
+                if(dis[v]>lc+wt && st<=k)
+                {
+                    if(st==k && v!=dst)
+                        continue;
+                    dis[v]=lc+wt;
+                    q.push({st+1,v,dis[v]});
                 }
             }
         }
-
-        if(dist[dst]  == 1e9) return -1;
-        return dist[dst];
+        for(auto t: dis)cout<<t<<" ";
+        if(dis[dst]==1e9)
+            return -1;
+        return dis[dst];
+        
     }
 };
