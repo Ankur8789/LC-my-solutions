@@ -3,6 +3,7 @@ public:
     typedef long long ll;
     bool check(ll mid,int n,vector<int>& bat)
     {
+        //bade wale ko chalne dere hai taki easy pade
        ll cc=0;
        ll ps=0;
        for(auto t: bat)
