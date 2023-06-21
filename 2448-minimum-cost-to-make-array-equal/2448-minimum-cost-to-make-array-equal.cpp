@@ -1,37 +1,35 @@
 class Solution {
 public:
     typedef long long ll;
+    const ll maxN=1e6+2;
     long long minCost(vector<int>& nums, vector<int>& cost)
     {
         ll ans=1e18;
         ll n=nums.size();
-        vector<ll> pref(n),suff(n),prefc(n),suffc(n);
-        ll ps=0;
-        vector<pair<ll,ll>> v;
+        vector<ll> v(maxN);
         for(ll i=0;i<n;i++)
-            v.push_back({nums[i],cost[i]});
-        sort(v.begin(),v.end());
-        ll res=1e18;
-        vector<ll> lsum(n), rsum(n);
-        lsum[0] = 0;
-        rsum[n-1] = 0;
-        ll l = v[0].second, r = v[n-1].second;
-        
-        for(ll i=1; i<n; i++)
+            v[nums[i]]+=cost[i];
+        vector<ll> pref(maxN),suff(maxN);
+        ll ps=0;
+        for(ll i=0;i<maxN;i++)
         {
-            lsum[i] = lsum[i-1] + (v[i].first - v[i-1].first)*l;
-            l += v[i].second;
-            
-            rsum[n-i-1] = rsum[n-i] + (v[n-i].first - v[n-i-1].first)*r;
-            r += v[n-i-1].second;          
+            pref[i]+=ps;
+            if(i-1>=0)
+                pref[i]+=pref[i-1];
+            ps+=v[i];
         }
-        
-        for(ll i=0; i<n; i++)
+        ps=0;
+        for(ll i=maxN-1;i>=0;i--)
         {
-            ans = min(lsum[i] + rsum[i], ans);
+            suff[i]+=ps;
+            if(i+1<maxN)
+                suff[i]+=suff[i+1];
+            ps+=v[i];
         }
-        
+        for(ll i=1;i<maxN;i++)
+            ans=min(ans,pref[i]+suff[i]);
         return ans;
+        
         
     }
 };
