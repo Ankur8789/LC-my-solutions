@@ -1,6 +1,7 @@
 class Solution {
 public:
     //very good bfs question
+    //state optimization in bfs
     bool check(int x,int y,vector<string>& grid)
     {
         if(x<0 || y<0 || x>=grid.size() || y>=grid[0].size())
