@@ -4,18 +4,25 @@ public:
     {
         return a[1]<b[1];
     }
-    int findMinArrowShots(vector<vector<int>>& p) 
+    int findMinArrowShots(vector<vector<int>>& points) 
     {
-        sort(p.begin(),p.end(),cmp);
-        int cnt=1,x=p[0][1];
-        for(int i=1;i<p.size();i++)
+        sort(points.begin(),points.end(),cmp);
+        for(auto t: points)
+        int cc=1;
+        int count=0;
+        int mn=points[0][1];
+        for(int i=1;i<points.size();i++)
         {
-            if(p[i][0]>x)
+            if(points[i][0]<=mn)
             {
-                ++cnt;
-                x=p[i][1];
+                continue;
+            }
+            else
+            {
+                count++;
+                mn=points[i][1];
             }
         }
-        return cnt;
+        return count+1;
     }
 };
