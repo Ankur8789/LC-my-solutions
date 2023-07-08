@@ -1,7 +1,7 @@
 typedef long long ll;
 class Solution {
 public:
-    
+    // nice concept to learn in partitioning
     long long putMarbles(vector<int>& weights, int k) 
     {
         ll ans=0;
