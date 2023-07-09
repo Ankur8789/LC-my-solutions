@@ -50,7 +50,7 @@ public:
                 }
                 // cout<<ch<<" "<<p<<" "<<res<<" "<<cnt<<endl;
                 ans=max(ans,res);
-                
+                reverse(s.begin(),s.end());
             }
         }
         return ans;
