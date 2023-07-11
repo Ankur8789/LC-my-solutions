@@ -9,84 +9,53 @@
  */
 class Solution {
 public:
-    vector<int> adj[100001];
-    int vis[100001];
-    unordered_map<TreeNode*,int> mp;
-    int k=0;
+    unordered_map<int,vector<int>> adj;
     void build(TreeNode* root)
     {
         if(root==nullptr)
-            return ;
-        if(mp.find(root)==mp.end())
-                mp[root]=k++;
+            return;
         if(root->left!=nullptr)
         {
-            if(mp.find(root->left)==mp.end())
-                mp[root->left]=k++;
-            adj[mp[root]].push_back(mp[root->left]);
-            adj[mp[root->left]].push_back(mp[root]);
-            
+            adj[root->left->val].push_back(root->val);
+            adj[root->val].push_back(root->left->val);
         }
-        if(root->right)
+        if(root->right!=nullptr)
         {
-            if(mp.find(root->right)==mp.end())
-                mp[root->right]=k++;
-            adj[mp[root]].push_back(mp[root->right]);
-            adj[mp[root->right]].push_back(mp[root]);
-            
+            adj[root->val].push_back(root->right->val);
+            adj[root->right->val].push_back(root->val);
         }
         build(root->left);
         build(root->right);
-            
     }
-    vector<int> distanceK(TreeNode* root, TreeNode* target, int K) 
-    {    k=0;
-         build(root);  
-        int x=mp[target];
-       unordered_map<int,TreeNode*> muth;
-        for(auto t=mp.begin();t!=mp.end();t++)
-            muth[t->second]=t->first;
-       queue<int> q;
-     q.push(mp[target]);
-     vis[mp[target]]=1;
-     int tmp=0;
-     vector<TreeNode*> ps;
-     while(q.size()>0)
-     {
-         int sz=q.size();
-         while(sz--)
-         {
-             if(tmp==K)
-             {
-                int x=q.front();
-                 q.pop();
-                 ps.push_back(muth[x]);
-                 for(auto t: adj[x])
-                 {
-                     if(vis[t]==0)
-                        { q.push(t);vis[t]=1;}
-                 }
-             }
-             else
-             {
-                 int x=q.front();
-                 q.pop();
-                 //ps.push_back(muth[x]);
-                 for(auto t: adj[x])
-                 {
-                     if(vis[t]==0)
-                         {q.push(t);vis[t]=1;}
-                 }
-             }
-         }
-         if(tmp==K)
-             break;
-         tmp++;
-     }
-     vector<int> ans;
-     for(auto t: ps)
-         ans.push_back(t->val);
-     return ans;
-     
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) 
+    {
+        build(root);
+        unordered_map<int,int> vis,dis;
+        queue<int> q;
+        q.push(target->val);
+        vis[target->val]=1;
+        dis[target->val]=0;
+        while(q.size()>0)
+        {
+           int x=q.front();
+            q.pop();
+           for(auto t: adj[x])
+           {
+               if(vis.find(t)==vis.end())
+               {
+                   dis[t]=dis[x]+1;
+                   vis[t]=1;
+                   q.push(t);
+               }
+           }
+        }
+        vector<int> ans;
+        for(auto t: dis)
+        {
+            cout<<t.first<<" "<<t.second<<endl;
+            if(t.second==k)
+                ans.push_back(t.first);
+        }
+        return ans;
     }
 };
