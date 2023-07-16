@@ -2,24 +2,20 @@ class Solution {
 public:
     int maximumBeauty(vector<int>& nums, int k) 
     {
-        vector<pair<int,int>> vp;
-        vector<int> pref(300000+5,0);
-        for(int i=0;i<nums.size();i++)
-        {
-            
-            pref[nums[i]-k+100000]++;
-            pref[nums[i]+k+1+100000]--;
+         int val = 100000;
+        vector<int> fre(300005);
+        for (int i = 0; i < nums.size(); i++) {
+            fre[nums[i] - k + val]++;
+            fre[nums[i] + k + val + 1]--;
         }
-       
-        int res=0;
-        int ps=0;
-        for(int i=0;i<300000+5;i++)
-        {
-            ps+=pref[i];
-            res=max(res,ps);
-            pref[i]=ps;
+        int sum = 0;
+        int ans = 0;
+        for (int i = 0; i < 300005; i++) {
+            sum += fre[i];
+            ans = std::max(ans, sum);
         }
-        return res;
+    
+        return ans;
         
     }
 };
