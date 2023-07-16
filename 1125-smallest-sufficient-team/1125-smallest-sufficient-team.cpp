@@ -12,7 +12,7 @@ class Solution
 public:
     vector<ll> mask;
     unordered_map<string, ll> mp;
-    map<string, ll> dp;
+    map<pair<ll,ll>, ll> dp;
     ll f(int i, unordered_set<string> &st, vector<vector<string>> &people,ll msk)
     {
         if(i==mask.size())
@@ -22,9 +22,9 @@ public:
             else
                 return INT_MAX;
         }
-        string val=to_string(i)+" "+to_string(msk);
-        if(dp.count(val))
-            return dp[val];
+        // string val=to_string(i)+" "+to_string(msk);
+        if(dp.count({i,msk}))
+            return dp[{i,msk}];
         ll a=f(i+1,st,people,msk);
         ll b=f(i+1,st,people,msk|mask[i]);
         ll ans=0;
@@ -32,7 +32,7 @@ public:
             ans=b|(1LL<<i);
         else
             ans=a;
-        return dp[val]=ans;
+        return dp[{i,msk}]=ans;
     }
     vector<int> smallestSufficientTeam(vector<string> &req, vector<vector<string>> &people)
     {
