@@ -6,8 +6,12 @@ public:
             pref[x-k+100000]++;
             pref[(x+k+1+100000)]--;
         }
+        int mx=0;
         for (int i=1; i<300005; i++)
-            pref[i] += pref[i-1];
-        return *max_element(pref.begin(), pref.end());
+        {
+            pref[i]+=pref[i-1];
+            mx=max(mx,pref[i]);
+        }
+        return mx;
     }
 };
