@@ -1,17 +1,25 @@
 class Solution {
 public:
-    int maximumBeauty(vector<int>& nums, int k) {
-        vector<int> pref(300005);
-        for (int x : nums) {
-            pref[x-k+100000]++;
-            pref[(x+k+1+100000)]--;
-        }
-        int mx=0;
-        for (int i=1; i<300005; i++)
+    int maximumBeauty(vector<int>& nums, int k) 
+    {
+        vector<pair<int,int>> vp;
+        vector<int> pref(300000+5,0);
+        for(int i=0;i<nums.size();i++)
         {
-            pref[i]+=pref[i-1];
-            mx=max(mx,pref[i]);
+            
+            pref[nums[i]-k+100000]++;
+            pref[nums[i]+k+1+100000]--;
         }
-        return mx;
+       
+        int res=0;
+        int ps=0;
+        for(int i=0;i<300000+5;i++)
+        {
+            ps+=pref[i];
+            res=max(res,ps);
+            pref[i]=ps;
+        }
+        return res;
+        
     }
 };
