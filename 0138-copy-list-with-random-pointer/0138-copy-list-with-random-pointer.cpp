@@ -1,0 +1,63 @@
+class Solution
+{
+public:
+    void insert(Node *&head, Node *&tail, int val)
+    {
+        Node *temp = new Node(val);
+        if (head == NULL)
+        {
+            tail = temp;
+            head = temp;
+        }
+        else
+        {
+            tail->next = temp;
+            tail = temp;
+        }
+    }
+    Node *copyRandomList(Node *head)
+    {
+        Node *temp = head;
+        Node *clonehead = NULL;
+        Node *clonetail = NULL;
+        while (temp != NULL)
+        {
+            insert(clonehead, clonetail, temp->val);
+            temp = temp->next;
+        }
+        Node *orghead = head;
+        Node *duphead = clonehead;
+        while (orghead != NULL && duphead != NULL)
+        {
+            Node *next = orghead->next;
+            orghead->next = duphead;
+            orghead = next;
+
+            next = duphead->next;
+            duphead->next = orghead;
+            duphead = next;
+        }
+        temp = head;
+        while (temp != NULL)
+        {
+            if (temp->next != NULL && temp->random != NULL)
+            {
+                temp->next->random = (temp != NULL) ? temp->random->next : NULL;
+            }
+            temp = temp->next->next;
+        }
+        orghead = head;
+        duphead = clonehead;
+        while (orghead != NULL && duphead != NULL)
+        {
+            orghead->next = duphead->next;
+            orghead = orghead->next;
+            if (orghead != NULL)
+            {
+                duphead->next = orghead->next;
+            }
+            duphead = duphead->next;
+        }
+        return clonehead;
+    }
+};
