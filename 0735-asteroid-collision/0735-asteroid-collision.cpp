@@ -1,5 +1,7 @@
 class Solution {
 public:
+    //  order of 2*n solution 
+    // any index is visited at max twice
     vector<int> asteroidCollision(vector<int>& as) 
     {
         int cnt=0;
