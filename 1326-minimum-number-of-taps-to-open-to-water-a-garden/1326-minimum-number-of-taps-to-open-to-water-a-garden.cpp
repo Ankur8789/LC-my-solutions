@@ -20,6 +20,7 @@ public:
         sort(vp.begin(),vp.end(),cmp);
         // for(auto t: vp)
         //     cout<<t.first<<" "<<t.second<<endl;
+        //usko liye jo sabse dur jayega
         vector<pair<int,int>> req;
         req.push_back(vp[0]);
         int cnt=0;
