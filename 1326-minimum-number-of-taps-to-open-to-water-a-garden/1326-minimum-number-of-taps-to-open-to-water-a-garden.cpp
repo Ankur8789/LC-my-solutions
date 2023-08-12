@@ -1,12 +1,12 @@
 class Solution {
 public:
-    // static bool cmp(pair<int,int>& a,pair<int,int>& b)
-    // {
-    //     if(a.first==b.first)
-    //         return a.second>b.second;
-    //     else
-    //         return a.first<b.first;
-    // }
+    static bool cmp(pair<int,int>& a,pair<int,int>& b)
+    {
+        if(a.first==b.first)
+            return a.second>b.second;
+        else
+            return a.first<b.first;
+    }
     int minTaps(int n, vector<int>& ranges) 
     {
         vector<pair<int,int>> vp;
@@ -17,7 +17,7 @@ public:
             vp.push_back({mn,mx});
             
         }
-        sort(vp.begin(),vp.end());
+        sort(vp.begin(),vp.end(),cmp);
         // for(auto t: vp)
         //     cout<<t.first<<" "<<t.second<<endl;
         vector<pair<int,int>> req;
