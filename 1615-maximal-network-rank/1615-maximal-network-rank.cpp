@@ -1,39 +1,41 @@
-class Solution
-{
+class Solution {
 public:
-    int maximalNetworkRank(int n, vector<vector<int>> &roads)
+    unordered_map<int,set<int>> adj;
+    map<pair<int,int>,int> pres;
+    int max(int a,int b)
     {
-
-        unordered_map<int, unordered_set<int>> adj;
-        for (auto &road : roads)
+        if(a>b)
+            return a;
+        else
+            return b;
+    }
+    int maximalNetworkRank(int n, vector<vector<int>>& roads) 
+    {
+        for(auto t: roads)
         {
-
-            int u = road[0];
-            int v = road[1];
-
+            int u=t[0];
+            int v=t[1];
+            if(pres.find({u,v})!=pres.end() || pres.find({v,u})!=pres.end())
+                continue;
             adj[u].insert(v);
             adj[v].insert(u);
         }
-
-        int maxRank = 0;
-        for (int i = 0; i < n; i++)
+        int ans=0;
+        for(int i=0;i<n;i++)
         {
-            for (int j = i + 1; j < n; j++)
+            for(int j=i+1;j<n;j++)
             {
-
-                int i_rank = adj[i].size();
-                int j_rank = adj[j].size();
-
-                int rank = i_rank + j_rank;
-                if (adj[i].find(j) != adj[i].end())
+                if(adj[i].find(j)!=adj[i].end())
                 {
-                    rank--;
+                    ans=max(ans,adj[i].size()+adj[j].size()-1);
                 }
-
-                maxRank = max(maxRank, rank);
+                else
+                {
+                    ans=max(ans,adj[i].size()+adj[j].size());
+                }
             }
         }
-
-        return maxRank;
+        return ans;
+        
     }
 };
