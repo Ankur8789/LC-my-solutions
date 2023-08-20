@@ -1,12 +1,5 @@
 typedef long long ll;
 const ll mod=1e9+7;
-ll F[1000001];
-void ix()
-{
-    F[0] = F[1] = 1;
-    for (ll i = 2; i <= 1000000; i++)
-        F[i] = (F[i - 1] * 1LL * i) % mod;
-}
 ll mpw(ll base, ll exp, ll M)
 {
     // O(LOGEXP) TIME
