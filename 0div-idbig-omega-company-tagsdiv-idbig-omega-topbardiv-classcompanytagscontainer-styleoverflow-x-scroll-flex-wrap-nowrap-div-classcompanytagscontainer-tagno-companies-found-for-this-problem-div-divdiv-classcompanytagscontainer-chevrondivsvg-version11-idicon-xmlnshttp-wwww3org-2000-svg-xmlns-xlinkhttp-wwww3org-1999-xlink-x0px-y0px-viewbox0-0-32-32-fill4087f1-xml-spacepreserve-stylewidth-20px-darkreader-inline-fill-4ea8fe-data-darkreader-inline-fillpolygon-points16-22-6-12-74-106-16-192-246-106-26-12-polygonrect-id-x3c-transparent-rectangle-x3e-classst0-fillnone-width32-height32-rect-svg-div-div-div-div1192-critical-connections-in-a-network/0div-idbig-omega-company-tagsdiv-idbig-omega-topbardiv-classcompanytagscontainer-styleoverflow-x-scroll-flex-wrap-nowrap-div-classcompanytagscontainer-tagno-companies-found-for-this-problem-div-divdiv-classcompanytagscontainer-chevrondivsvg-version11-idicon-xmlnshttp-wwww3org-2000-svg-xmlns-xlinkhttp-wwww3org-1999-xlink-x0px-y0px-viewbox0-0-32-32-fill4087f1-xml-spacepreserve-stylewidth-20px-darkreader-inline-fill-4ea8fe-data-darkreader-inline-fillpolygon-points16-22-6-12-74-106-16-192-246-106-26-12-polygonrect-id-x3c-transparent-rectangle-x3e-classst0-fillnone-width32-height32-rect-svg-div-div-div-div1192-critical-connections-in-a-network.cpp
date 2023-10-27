@@ -1,19 +1,23 @@
-int n; // number of nodes
-
-
+int n; 
 vector<bool> visited;
 vector<int> tin, low;
 vector<vector<int>> ans;
 int timer;
 unordered_map<int,vector<int>> adj;
-void dfs(int v, int p = -1) {
+void dfs(int v, int p = -1) 
+{
     visited[v] = true;
     tin[v] = low[v] = timer++;
-    for (int to : adj[v]) {
-        if (to == p) continue;
-        if (visited[to]) {
+    for (int to : adj[v]) 
+    {
+        if (to == p)
+            continue;
+        if (visited[to]) 
+        {
             low[v] = min(low[v], tin[to]);
-        } else {
+        } 
+        else 
+        {
             dfs(to, v);
             low[v] = min(low[v], low[to]);
             if (low[to] > tin[v])
@@ -22,12 +26,14 @@ void dfs(int v, int p = -1) {
     }
 }
 
-void find_bridges() {
+void find_bridges() 
+{
     timer = 0;
     visited.assign(n, false);
     tin.assign(n, -1);
     low.assign(n, -1);
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) 
+    {
         if (!visited[i])
             dfs(i);
     }
