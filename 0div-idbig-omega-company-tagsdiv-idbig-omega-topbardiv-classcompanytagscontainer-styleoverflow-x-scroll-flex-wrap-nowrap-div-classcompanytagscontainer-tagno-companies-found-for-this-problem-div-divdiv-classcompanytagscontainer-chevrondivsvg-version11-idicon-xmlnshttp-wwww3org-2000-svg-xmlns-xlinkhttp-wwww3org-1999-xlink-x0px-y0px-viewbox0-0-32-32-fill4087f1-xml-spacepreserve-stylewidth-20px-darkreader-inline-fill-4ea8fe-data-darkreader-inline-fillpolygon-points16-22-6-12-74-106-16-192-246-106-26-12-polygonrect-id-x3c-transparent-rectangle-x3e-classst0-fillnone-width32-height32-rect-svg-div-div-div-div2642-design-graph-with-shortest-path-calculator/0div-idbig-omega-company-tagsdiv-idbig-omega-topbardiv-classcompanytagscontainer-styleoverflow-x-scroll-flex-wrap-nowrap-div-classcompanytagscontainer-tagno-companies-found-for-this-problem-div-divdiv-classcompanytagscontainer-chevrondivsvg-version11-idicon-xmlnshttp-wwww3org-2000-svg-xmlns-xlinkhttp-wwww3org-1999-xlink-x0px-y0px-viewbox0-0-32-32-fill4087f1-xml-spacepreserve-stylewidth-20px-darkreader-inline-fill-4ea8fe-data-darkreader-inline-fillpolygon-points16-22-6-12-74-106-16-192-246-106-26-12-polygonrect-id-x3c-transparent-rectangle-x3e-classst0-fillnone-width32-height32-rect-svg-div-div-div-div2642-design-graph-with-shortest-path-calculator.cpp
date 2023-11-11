@@ -6,7 +6,7 @@ public:
     
     Graph(int n, vector<vector<int>>& edges) 
     {
-        adj.clear();
+       adj.clear();
        for(auto t: edges)
        {
            adj[t[0]].push_back({t[1],t[2]});
@@ -21,30 +21,30 @@ public:
     
     int shortestPath(int node1, int node2)
     {
-    vector<ll> dis(fuck,1e18);
-    set<pair<ll, ll>> st;
-    dis[node1] = 0;
-    st.insert({0, node1});
-    while (st.size() > 0)
-    {
-        pair<ll, ll> p = *st.begin();
-        st.erase(st.begin());
-        ll wt = p.first;
-        ll u = p.second;
-        for (auto t : adj[u])
+        vector<ll> dis(fuck,1e18);
+        set<pair<ll, ll>> st;
+        dis[node1] = 0;
+        st.insert({0, node1});
+        while (st.size() > 0)
         {
-            pair<ll, ll> q = t;
-            ll v = q.first;
-            ll x = q.second;
-            if (dis[v] > dis[u] + x)
+            pair<ll, ll> p = *st.begin();
+            st.erase(st.begin());
+            ll wt = p.first;
+            ll u = p.second;
+            for (auto t : adj[u])
             {
-                if (st.find({dis[v], v}) != st.end())
-                    st.erase({dis[v], v});
-                dis[v] = dis[u] + x;
-                st.insert({dis[v], v});
+                pair<ll, ll> q = t;
+                ll v = q.first;
+                ll x = q.second;
+                if (dis[v] > dis[u] + x)
+                {
+                    if (st.find({dis[v], v}) != st.end())
+                        st.erase({dis[v], v});
+                    dis[v] = dis[u] + x;
+                    st.insert({dis[v], v});
+                }
             }
         }
-    }
         if(dis[node2]==1e18)
             return -1;
         return dis[node2];
