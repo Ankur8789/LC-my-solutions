@@ -1,16 +1,15 @@
 class Solution {
 public:
-    //very good question
     typedef long long ll;
     int maxFrequency(vector<int>& nums, int k) 
     {
-       sort(nums.begin(),nums.end());
-        ll i=0,j=0,n=nums.size();
-        ll sum=0;
-        ll res=INT_MIN;
+        sort(begin(nums),end(nums));
+        int n=nums.size();
+        ll res=0,sum=0;
+        ll i=0,j=0;
         while(j<n)
         {
-           sum+=nums[j];
+            sum+=nums[j];
             while(sum+k<(j-i+1)*nums[j])
             {
                 sum-=nums[i];
@@ -18,7 +17,6 @@ public:
             }
             res=max(res,j-i+1);
             j++;
-            
         }
         return res;
         
