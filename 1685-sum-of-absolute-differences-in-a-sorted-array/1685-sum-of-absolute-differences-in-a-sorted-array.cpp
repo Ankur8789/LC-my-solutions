@@ -1,31 +1,25 @@
-#define fastio()                      \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL);
 class Solution {
 public:
-    typedef long long ll;
     vector<int> getSumAbsoluteDifferences(vector<int>& nums) 
     {
-        fastio();
-        ll n=nums.size();
-        vector<ll> pre(n);
-        ll ps=0;
-        for(ll i=0;i<n;i++)
-        {
-            ps+=nums[i];
-            pre[i]=ps;
-        }
-        vector<int> ans;
-        for(ll i=0;i<n;i++)
-        {
-            ll x=nums[i]*i;
-            x-=pre[i]-nums[i];
-            ll y=pre[n-1]-pre[i];
-            y-=nums[i]*(n-i-1);
-            ans.push_back(x+y);
-        }
+         vector<int> ans;
+         int n=nums.size();
+         vector<int> pref(n),suff(n);
+         pref[0]=nums[0];
+         suff[n-1]=nums[n-1];
+         for(int i=1;i<n;i++)pref[i]+=pref[i-1]+nums[i];
+         // cout<<endl;
+         for(int i=n-2;i>=0;i--)suff[i]+=suff[i+1]+nums[i];
+         // for(int i=0;i<n;i++)cout<<pref[i]<<" "<<suff[i]<<endl;
+         for(int i=0;i<n;i++)
+         {
+             int total=0;
+             if(i-1>=0)
+                 total+=(i*nums[i]-pref[i-1]);
+             if(i+1<n)
+                 total+=(suff[i+1]-(n-i-1)*nums[i]);
+             ans.push_back(total);
+         }
         return ans;
-        
     }
 };
