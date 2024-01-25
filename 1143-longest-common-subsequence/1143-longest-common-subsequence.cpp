@@ -10,9 +10,9 @@ public:
             return x;
         int ans=0;
         if(s1[i]==s2[j])
-            ans=max(ans,1+f(i+1,j+1,s1,s2));
+            ans=max({ans,1+f(i+1,j+1,s1,s2),f(i+1,j,s1,s2),f(i,j+1,s1,s2),f(i+1,j+1,s1,s2)});
         else
-            ans=max({ans,f(i+1,j,s1,s2),f(i,j+1,s1,s2)});
+            ans=max({ans,f(i+1,j,s1,s2),f(i,j+1,s1,s2),f(i+1,j+1,s1,s2)});
         return x=ans;
     }
     int longestCommonSubsequence(string text1, string text2)
