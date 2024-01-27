@@ -17,8 +17,8 @@ public:
         for(int idx=i;idx>=0;idx--)
         {
             //  new pairs=i-idx;
-            if(i-idx>k)
-                break;
+            // if(i-idx>k)
+            //     break;
             ans+=f(i+1,n,k-(i-idx));
             ans%=mod;
         }
