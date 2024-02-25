@@ -1,12 +1,6 @@
-#define fastio()                      \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL);
 typedef long long ll;
-ll mxele;
-ll parent[100001];
-ll siz[100001];
-//case of one ne fasa diya
+ll parent[200001];
+ll siz[200001];
 void make(ll v)
 {
     parent[v] = v;
@@ -31,63 +25,41 @@ void Union(ll a, ll b)
         siz[a] += siz[b];
     }
 }
-
-    
-    bool gcdSort(vector<int>& nums) 
-    {
-        mxele=*max_element(begin(nums),end(nums));
-        vector<ll> vis(mxele+1);
-        ll cc=0;
-        for(auto t: nums)
-        {
-            if(vis[t]==0)
-                cc++;
-            vis[t]++;
-        }
-        for(ll i=1;i<mxele+1;i++)
-        {
-            if(vis[i])
-                make(i);
-        }
-        for(ll i=2;i<mxele+1;i++)
-        {
-            ll last=-1;
-            for(ll j=i;j<mxele+1;j+=i)
-            {
-               if(vis[j]>0)
-               {
-                   if(last==-1)
-                       last=j;
-                   else
-                   {
-                       Union(last,j);
-                       last=j;
-                   }
-               }
-            }
-        }
-        unordered_set<ll> st;
-        for(ll i=0;i<nums.size();i++)
-        {
-           if(nums[i]==1)
-               continue;
-           st.insert(find(nums[i]));
-        }
-        return st.size()==1;
-    }
-
 class Solution {
 public:
-    bool canTraverseAllPairs(vector<int>& nums)
+    bool canTraverseAllPairs(vector<int>& nums) 
     {
-        fastio();
-        if(nums.size()==1)
-            return true;
-        for(auto t: nums)
-        {
-            if(t==1)
-                return false;
-        }
-        return gcdSort(nums);
+       if(nums.size()==1)
+           return 1;
+       int maxi=*max_element(begin(nums),end(nums));
+       for(int i=0;i<nums.size();i++)
+           make(nums[i]);
+       unordered_map<ll,ll> ava;
+       for(auto t: nums)
+           ava[t]+=1;
+       if(ava.find(1)!=ava.end())
+           return 0;
+       for(int i=2;i<maxi+1;i++)
+       {
+           int val=i;
+           int last=-1;
+           for(ll j=val;j<maxi+1;j+=val)
+           {
+               if(ava.find(j)!=ava.end())
+               {
+                  if(last==-1)
+                      last=j;
+                   else
+                   Union(last,j);
+               }
+           }
+       }
+       for(auto t: nums)
+       {
+           cout<<find(t)<<endl;
+           if(find(t)!=find(nums[0]))
+               return 0;
+       }
+        return 1;
     }
 };
