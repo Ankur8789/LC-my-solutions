@@ -11,25 +11,27 @@
  */
 class Solution {
 public:
-    int ans;
-    void f(TreeNode* root,string str)
+    void f(TreeNode* root , string res , int& val)
     {
-        if(root==nullptr)
+        if(root == nullptr)
             return ;
-        if(root->left==nullptr & root->right==nullptr)
+        if(root -> left == nullptr && root -> right == nullptr)
         {
-            str+=to_string(root->val);
-            ans+=stoi(str);
-            str.pop_back();
+            res+=char(root->val+'0');
+            val += stoi(res);
+            res.pop_back();
             return ;
         }
-        f(root->left,str+to_string(root->val));
-        f(root->right,str+to_string(root->val));
+        f(root -> left , res+char(root->val + '0') , val);
+        f(root -> right , res+char(root->val + '0') , val);
+        
     }
     int sumNumbers(TreeNode* root) 
-    {   ans=0;
-        string str;
-        f(root,str);
-        return ans;
+    {
+        if(root == nullptr)
+            return 0;
+        int val = 0;
+        f(root , "" , val);
+        return val;
     }
 };
