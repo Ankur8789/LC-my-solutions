@@ -1,89 +1,88 @@
-class Solution {
+class Solution
+{
 public:
-    int openLock(vector<string>& dd, string target) 
+    int openLock(vector<string> &deadends, string target)
     {
         unordered_set<string> st;
-        for(auto t: dd)
-            st.insert(t);
-        if(st.find("0000")!=st.end())
-            return -1;
-        queue<string> q;
-        q.push("0000");
-        int lv=0;
-        while(q.size()>0)
+        for (auto x : deadends)
+            st.insert(x);
+        queue<pair<int, string>> q;
+        unordered_map<string, int> vis;
+        q.push({0, "0000"});
+        while (q.size() > 0)
         {
-           int sz=q.size();
-            while(sz--)
+            auto pr = q.front();
+            q.pop();
+            string s = pr.second;
+            int cnt = pr.first;
+            if (s == target)
+                return cnt;
+            if (st.find(s) != st.end())
+                continue;
+            for (auto &x : s)
             {
-                string s=q.front();
-                if(s==target)
-                    return lv;
-                q.pop();
-                for(int i=0;i<4;i++)
+                char pre = x;
+                if (x == '0' || x == '9')
                 {
-                    if(s[i]=='0' || s[i]=='9')
+                    if (x == '0')
                     {
-                        if(s[i]=='0')
+                        char pre = x;
+                        char ch1 = '1';
+                        char ch2 = '9';
+                        x = ch1;
+                        if (vis.find(s) == vis.end())
                         {
-                            s[i]='1';
-                            if(st.find(s)==st.end())
-                            {
-                                cout<<s<<endl;
-                                st.insert(s);
-                                q.push(s);
-                            }
-                            s[i]='9';
-                            if(st.find(s)==st.end())
-                            {
-                                cout<<s<<endl;
-                                st.insert(s);
-                                q.push(s);
-                            }
-                            s[i]='0';
-                            
+                            vis[s] = 1;
+                            q.push({cnt + 1, s});
                         }
-                        else
+                        x = ch2;
+                        if (vis.find(s) == vis.end())
                         {
-                            s[i]='0';
-                            if(st.find(s)==st.end())
-                            {
-                                cout<<s<<endl;
-                                st.insert(s);
-                                q.push(s);
-                            }
-                            s[i]='8';
-                            if(st.find(s)==st.end())
-                            {
-                                cout<<s<<endl;
-                                st.insert(s);
-                                q.push(s);
-                            }
-                            s[i]='9';
+                            vis[s] = 1;
+                            q.push({cnt + 1, s});
                         }
+                        x = pre;
                     }
                     else
                     {
-                        char pre=s[i];
-                        char ch=pre;
-                        s[i]=ch+1;
-                        if(st.find(s)==st.end())
+                        char pre = x;
+                        char ch1 = '8';
+                        char ch2 = '0';
+                        x = ch1;
+                        if (vis.find(s) == vis.end())
                         {
-                            cout<<s<<endl;
-                            q.push(s);
-                            st.insert(s);
+                            vis[s] = 1;
+                            q.push({cnt + 1, s});
                         }
-                        //ch=pre;
-                        s[i]=ch-1;
-                        if(st.find(s)==st.end())
-                        {  cout<<s<<endl;
-                            q.push(s);
-                            st.insert(s);
+                        x = ch2;
+                        if (vis.find(s) == vis.end())
+                        {
+                            vis[s] = 1;
+                            q.push({cnt + 1, s});
                         }
-                        s[i]=pre;
+                        x = pre;
                     }
                 }
+                else
+                {
+                    char pre = x;
+                    char ch1 = x + 1;
+                    char ch2 = x - 1;
+                    x = ch1;
+                    if (vis.find(s) == vis.end())
+                    {
+                        vis[s] = 1;
+                        q.push({cnt + 1, s});
+                    }
+                    x = ch2;
+                    if (vis.find(s) == vis.end())
+                    {
+                        vis[s] = 1;
+                        q.push({cnt + 1, s});
+                    }
+                    x = pre;
+                }
             }
-            lv++;
         }
         return -1;
     }
