@@ -8,11 +8,10 @@ public:
         }
         else
         {
-            //take
             v.push_back(nums[i]);
             subsets(v,subs,i+1,nums);
             v.pop_back();
-             subsets(v,subs,i+1,nums);// not take
+            subsets(v,subs,i+1,nums);
         }
     }
     vector<vector<int>> subsets(vector<int>& nums) 
