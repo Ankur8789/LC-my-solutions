@@ -3,43 +3,37 @@ class Solution
 public:
     int numSteps(string s)
     {
-        int n;
-        int last = s.size() - 1;
-        int opr = 0;
-        if (s == "1")
+        int cnt = 0;
+        while (s.length() > 1)
         {
-            return 0;
-        }
-        while (true)
-        {
-            n = last;
-            if (s[n] == '0')
-            {
-                last--;
-            }
+            cnt++;
+            int n = s.length();
+            if (s[n - 1] == '0')
+                s.pop_back();
             else
             {
-                while (n >= 0 && s[n] == '1')
+                int carr = 1;
+                s[n - 1] = '0';
+                for (int i = n - 2; i >= 0; i--)
                 {
-                    s[n] = '0';
-                    n--;
+                    if (carr)
+                    {
+                        if (s[i] == '1')
+                        {
+                            s[i] = '0';
+                            carr = 1;
+                        }
+                        else
+                        {
+                            s[i] = '1';
+                            carr = 0;
+                        }
+                    }
                 }
-                if (n < 0)
-                {
+                if (carr)
                     s = '1' + s;
-                    last++;
-                }
-                else
-                {
-                    s[n] = '1';
-                }
-            }
-            opr++;
-            if (last == 0)
-            {
-                break;
             }
         }
-        return opr;
+        return cnt;
     }
 };
