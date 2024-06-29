@@ -4,7 +4,6 @@ public:
     int ideg[1001];
     vector<vector<int>> getAncestors(int n, vector<vector<int>>& e) 
     {   
-       //basically it is brute solution
        for(int i=0;i<101;i++)ideg[i]=0;
        for(auto t: e)
        {
