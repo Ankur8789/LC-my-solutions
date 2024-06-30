@@ -1,122 +1,102 @@
-class DSU
+typedef long long ll;
+ll parent1[200001];
+ll siz1[200001];
+void make1(ll v)
 {
-public:
-    vector<int> parent;
-    vector<int> rank;
-    int components;
-
-    DSU(int n)
-    {
-        parent.resize(n + 1);
-        for (int i = 1; i <= n; i++)
-        {
-            parent[i] = i;
-        }
-        rank.resize(n + 1);
-        components = n;
-    }
-
-    int findParent(int node)
-    {
-        if (node == parent[node])
-        {
-            return node;
-        }
-        return findParent(parent[node]);
-    }
-
-    void unionByRank(int node1, int node2)
-    {
-        int p1 = findParent(node1);
-        int p2 = findParent(node2);
-
-        if (p1 == p2)
-        {
-            return;
-        }
-        if (rank[p1] > rank[p2])
-        {
-            parent[p2] = p1;
-        }
-        else if (rank[p2] > rank[p1])
-        {
-            parent[p1] = p2;
-        }
-        else
-        {
-            parent[p1] = p2;
-            rank[p2]++;
-        }
-        components--;
-    }
-
-    bool isSingle()
-    {
-        return components == 1;
-    }
-};
-
-class Solution
+    parent1[v] = v;
+    siz1[v] = 1;
+}
+ll find1(ll v)
 {
+    if (parent1[v] == v)
+        return v;
+    else // path compresssion
+        return parent1[v] = find1(parent1[v]);
+}
+void Union1(ll a, ll b)
+{
+    a = find1(a);
+    b = find1(b);
+    if (a != b)
+    { // union by size
+        if (siz1[a] < siz1[b])
+            swap(a, b);
+        parent1[b] = a;
+        siz1[a] += siz1[b];
+    }
+}
+ll parent2[200001];
+ll siz2[200001];
+void make2(ll v)
+{
+    parent2[v] = v;
+    siz2[v] = 1;
+}
+ll find2(ll v)
+{
+    if (parent2[v] == v)
+        return v;
+    else // path compresssion
+        return parent2[v] = find2(parent2[v]);
+}
+void Union2(ll a, ll b)
+{
+    a = find2(a);
+    b = find2(b);
+    if (a != b)
+    { // union by size
+        if (siz2[a] < siz2[b])
+            swap(a, b);
+        parent2[b] = a;
+        siz2[a] += siz2[b];
+    }
+}
+class Solution {
 public:
-    int maxNumEdgesToRemove(int n, vector<vector<int>> &edges)
+    int maxNumEdgesToRemove(int n, vector<vector<int>>& edges) 
     {
-
-        DSU Alice(n);
-        DSU Bob(n);
-
-        auto lambda = [](vector<int> &a, vector<int> &b)
+        for(int i=0;i<n;i++)
+            make1(i+1),make2(i+1);
+        int cnt=0;
+        sort(begin(edges),end(edges));
+        reverse(begin(edges),end(edges));
+        int rem=0;
+        for(auto x: edges)
         {
-            return a[0] > b[0];
-        };
-        sort(edges.begin(), edges.end(), lambda);
-
-        int edge = 0;
-        for (auto &ed : edges)
-        {
-            int type = ed[0];
-            int u = ed[1];
-            int v = ed[2];
-
-            if (type == 3)
+            ll type=x[0];
+            ll u=x[1];
+            ll v=x[2];
+            if(type==3)
             {
-                bool edgeAdded = false;
-                if (Alice.findParent(u) != Alice.findParent(v))
-                {
-                    Alice.unionByRank(u, v);
-                    edgeAdded = true;
-                }
-                if (Bob.findParent(u) != Bob.findParent(v))
-                {
-                    Bob.unionByRank(u, v);
-                    edgeAdded = true;
-                }
-                if (edgeAdded == true)
-                {
-                    edge++;
-                }
-            }
-            else if (type == 2)
-            {
-                if (Bob.findParent(u) != Bob.findParent(v))
-                {
-                    Bob.unionByRank(u, v);
-                    edge++;
-                }
+               if(find1(u)!=find1(v) || find2(u)!=find2(v))
+               {
+                   Union1(u,v);
+                   Union2(u,v);
+               }
+               else
+                   cnt++;
             }
             else
             {
-                if (Alice.findParent(u) != Alice.findParent(v))
-                {
-                    Alice.unionByRank(u, v);
-                    edge++;
-                }
+               if(type==1)
+               {
+                  if(find1(u)!=find1(v))
+                      Union1(u,v);
+                  else
+                      cnt++;
+               }
+               else
+               {
+                   if(find2(u)!=find2(v))
+                       Union2(u,v);
+                   else
+                       cnt++;
+               }
             }
         }
-        if (Alice.isSingle() == true and Bob.isSingle() == true)
-        {
-            return edges.size() - edge;
-        }
-        return -1;
+        if(siz1[find1(1)]==n && siz2[find2(1)]==n)
+            return cnt;
+        else
+            return -1;
     }
 };
