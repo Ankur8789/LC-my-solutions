@@ -1,34 +1,24 @@
 class Solution {
 public:
-    typedef long long ll;
-    int minimumDeletions(string s) 
-    {
-        ll na=0,nb=0;
-        for(auto t: s)
-        {
-            if(t=='a')
-                na++;
+    int minimumDeletions(string s) {
+        int n=s.size();
+        int ta=0,tb=0;
+        int cnta=0,cntb=0;
+        for(auto x: s){
+            if(x=='b')
+                tb++;
             else
-                nb++;
+                ta++;
         }
-        ll nac=0,nbc=0;
-        ll ans=INT_MAX;
-        for(auto t: s)
-        {
-            if(t=='a')
-            {
-               ans=min(ans,nbc+na-nac-1);
-               ans=min(ans,nbc+na-nac);
-            }
+        int ans=n;
+        ans=min(ans,min(n-ta,n-tb));
+        for(auto x: s){
+            if(x=='a')
+                cnta++;
             else
-            {
-                ans=min(ans,nbc+na-nac);
-                ans=min(ans,nbc+1+na-nac);
-            }
-            if(t=='a')
-                nac++;
-            else
-                nbc++;
+                cntb++;
+            int res=cntb+ta-cnta;
+            ans=min(ans,res);
         }
         return ans;
     }
