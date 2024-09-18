@@ -5,7 +5,6 @@ public:
         string as=to_string(a);
         string bs=to_string(b);
         return as+bs<bs+as;
-        
     }
     string largestNumber(vector<int>& nums) 
     {
