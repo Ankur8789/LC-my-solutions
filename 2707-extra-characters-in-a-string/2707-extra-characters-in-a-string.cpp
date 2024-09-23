@@ -1,39 +1,31 @@
 class Solution {
 public:
+    unordered_set<string> st;
     int dp[51];
-    int f(int i,string& s,unordered_set<string>& st)
-    {
-        if(i==s.size())
+    int f(int i,string& s){
+        if(i>=s.size())
             return 0;
-        if(dp[i]!=-1)
-            return dp[i];
-        int ans=INT_MAX;
-        string str="";
-        for(int idx=i;idx<s.size();idx++)
-        {
-            str+=s[idx];
-            if(st.find(str)!=st.end())
-            {
-                int val=f(idx+1,s,st);
-                if(val<ans)
-                    ans=val;
+        auto& x=dp[i];
+        if(x!=-1)
+            return x;
+        int ans=1e9;
+        string res="";
+        for(int j=i;j<s.size();j++){
+            res+=s[j];
+            if(st.count(res)){
+                ans=min(ans,f(j+1,s));
             }
-            else
-            {
-                int val=str.size()+f(idx+1,s,st);
-                if(val<ans)
-                    ans=val;
+            else{
+               ans=min(ans,j-i+1+f(j+1,s)); 
             }
         }
-        return dp[i]=ans;
+        return x=ans;
     }
-    int minExtraChar(string s, vector<string>& dictionary) 
-    {
-        unordered_set<string> st;
-        for(auto t: dictionary)
-            st.insert(t);
-        memset(dp,-1,sizeof(dp));
-        int ans=f(0,s,st);
+    int minExtraChar(string s, vector<string>& dict) {
+        for(auto x: dict)
+            st.insert(x);
+        for(int i=0;i<=s.size()+1;i++)dp[i]=-1;
+        int ans=f(0,s);
         return ans;
     }
 };
