@@ -1,43 +1,31 @@
 class Solution {
 public:
-    class Trie
-    {
+    class Trie{
         public:
         Trie* child[26]={nullptr};
-        bool ending =false;
-        int cnt=0;
+        int end=0;
     };
-    vector<int> sumPrefixScores(vector<string>& words)
-    {
+    vector<int> sumPrefixScores(vector<string>& words) {
         Trie* root=new Trie();
-        for(auto t: words)
-        {
+        for(auto x: words){
             Trie* temp=root;
-            for(int i=0;i<t.size();i++)
-            {
-                if(temp->child[t[i]-'a']==nullptr)
-                {
-                    temp->child[t[i]-'a']=new Trie();                    
-                }
-                temp->child[t[i]-'a']->cnt++;
-                temp=temp->child[t[i]-'a']; 
-                
+            for(auto y:x){
+                if(temp->child[y-'a']==nullptr)
+                    temp->child[y-'a']=new Trie();
+                temp=temp->child[y-'a'];
+                temp->end++;
             }
-            temp->ending=true;   
         }
         vector<int> ans;
-        for(auto t: words)
-        {
-            Trie* node = root;
-            int cc=0;
-            for(int i=0;i<t.size();i++)
-            { 
-                cc+=node->child[t[i]-'a']->cnt;
-                node=node->child[t[i]-'a'];
+        for(auto x: words){
+            int cnt=0;
+            Trie* temp=root;
+            for(auto y: x){
+                cnt+=temp->child[y-'a']->end;
+                temp=temp->child[y-'a'];
             }
-            ans.push_back(cc);
+            ans.push_back(cnt);
         }
         return ans;
-        
     }
 };
