@@ -1,45 +1,35 @@
 class Solution {
 public:
-    bool canArrange(vector<int>& arr, int k)
-    {
-        map<int,int> mp;
-        int cnt=0;
-        for(int i=0;i<arr.size();i++)
-        {
-            arr[i]%=k;
-            if(arr[i]<0)
-                arr[i]+=k;
+    bool canArrange(vector<int>& arr, int k) {
+        vector<int> vec(k);
+        if(k==1)
+            return true;
+        for(auto& x: arr){
+            while(x<0)
+                x+=k;
+            vec[x%k]+=1;
         }
-        int zr=0;
-        for(int i=0;i<arr.size();i++)
-        {
-            if(arr[i]==0)
-                {zr++;continue;}
-            int req=k-arr[i];
-            if(mp.find(req)!=mp.end())
-            {
-                cnt++;
-                mp[req]--;
-                if(mp[req]==0)
-                    mp.erase(req);
+        int left=0;
+        for(int i=1;i<=(k+1)/2;i++){
+            if(i==(k+1)/2){
+                if(vec[i]&1)
+                    return false;
+                continue;
             }
+            int x=vec[i],y=vec[k-i];
+            vec[i]-=min(x,y);
+            vec[k-i]-=min(x,y);
+            left+=vec[i]+vec[k-i];
+        }
+        if(vec[0]>=left){
+            vec[0]-=left;
+            if(vec[0]&1)
+                return false;
             else
-            {
-                mp[arr[i]]++;
-            }
+                return true;
         }
-        if(zr&1)return false;
-        int left=arr.size()-2*cnt-zr;
-        if(left<=zr)
-        {
-             zr-=left;
-             if(zr&1)
-                 return false;
-             else
-                 return true;
-        }
-        else
+        else{
             return false;
-        
+        }
     }
 };
