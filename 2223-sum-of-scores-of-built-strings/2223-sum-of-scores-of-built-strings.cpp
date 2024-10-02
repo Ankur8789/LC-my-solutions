@@ -23,6 +23,7 @@ public:
         ll ans=0;
         // this is z function .... kisi v index se shuru hone wala wo largest substring
         // that is also a prefix so by default this condition is seen
+        // always remember if the function doesnt start with 0 then you have to add s.size() to it for index = 0
         vector<int> zf=z_function(s);
         for(auto x:zf)
             ans+=x;
