@@ -12,7 +12,7 @@ public:
        if(ones.size()==0)
            return 0;
        ll ans=0;
-       sort(ones.begin(),ones.end());
+       // sort(ones.begin(),ones.end());
         reverse(ones.begin(),ones.end());
        ll n=s.size();
        if(ones[0]!=n-1)
