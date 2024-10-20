@@ -44,15 +44,7 @@ public:
             }
             i++;
         }
-        // while(action.size()){
-        //     cout<<action.top()<<" ";
-        //     action.pop();
-        // }
-        // cout<<endl;
-        // while(type.size()){
-        //     cout<<type.top()<<" ";
-        //     type.pop();
-        // }
+       
         return (type.top()=='f')?0:1;
     }
 };
