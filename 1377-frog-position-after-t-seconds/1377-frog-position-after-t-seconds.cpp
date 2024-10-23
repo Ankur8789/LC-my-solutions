@@ -1,54 +1,39 @@
 class Solution {
 public:
-    vector<int> adj[101];
-    int vis[101];
-    double f(int x,int tm,int tg,int ct,int par)
-    {
-        // if(ct>tm)
-        //     return 0;
-        
-        if(ct==tm)
-        {
-            if(x==tg)
-               return 1;
+    typedef long double ld;
+    double frogPosition(int n, vector<vector<int>>& edges, int t, int target) {
+        unordered_map<int,vector<int>> adj;
+        for(auto x : edges){
+            int u = x[0] , v = x[1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
         }
-        
-        vector<int> vx;
-        for(auto t: adj[x])
-        {
-            if(t==par)
-                continue;
-            vx.push_back(t);
-        }
-        if(vx.size()==0)
-        {
-            if(ct<tm)
-            {
-                if(x==tg)
-                    return 1;
-                else
-                    return 0;
+        ld ans = 0.0;
+        vector<int> time(n+1 , 1e9);
+        vector<ld> prob(n+1);
+        prob[1] = 1.0;
+        time[1] = 0;
+        queue<int> q;
+        q.push(1);
+        while(q.size() > 0){
+            auto u = q.front();
+            q.pop();
+            int sz = adj[u].size();
+            if(u != 1)
+                sz--;
+            for(auto v : adj[u]){
+                if(time[v] != 1e9)
+                    continue;
+                ld rem = 1.0/ld(sz);
+                prob[v] = prob[u] * rem;
+                time[v] = time[u] + 1;
+                q.push(v);
             }
-            else
-                return 0;
         }
-        double ans=0;
-        for(auto t: vx)
-        {
-            ans+=f(t,tm,tg,ct+1,x)/vx.size();
-        }
-        return ans;
-    
-    }
-    double frogPosition(int n, vector<vector<int>>& edges, int tm, int tg) 
-    {
-        for(auto t: edges)
-        {
-            adj[t[0]].push_back(t[1]);
-            adj[t[1]].push_back(t[0]);
-        }
-        double ans=f(1,tm,tg,0,-1);
-        return ans;
         
+        if(time[target] == t || (adj[target].size() == 1 && target!=1 && time[target] <= t) || (adj[1].size() == 0))
+            return prob[target];
+        else
+            return 0.0;
     }
 };
