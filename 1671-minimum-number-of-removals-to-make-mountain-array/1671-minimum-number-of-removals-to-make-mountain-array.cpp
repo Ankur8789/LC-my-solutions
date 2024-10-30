@@ -36,7 +36,6 @@ public:
     int minimumMountainRemovals(vector<int>& nums) {
        memset(dp , -1 , sizeof(dp));
        int ans = f(0,-1,0,nums,0,0);
-        cout<<ans;
        return nums.size() - ans;
     }
 };
