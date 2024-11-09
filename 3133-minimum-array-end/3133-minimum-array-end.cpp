@@ -8,8 +8,8 @@ public:
        for(ll i=0;i<64;i++){
            if(n == 0)
                break;
-           if((val>>i)&1LL) continue;
-           val |= (n&1LL)<<i;
+           if((val >> i) & 1LL) continue;
+           val |= (n & 1LL) << i;
            n = n >> 1;
        }
        return val;
