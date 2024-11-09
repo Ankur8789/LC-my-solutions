@@ -2,7 +2,6 @@ class Solution {
 public:
     typedef long long ll;
     long long minEnd(int n, int x) {
-       ll ans = 1e18;
        ll val = x;
        n--;
        x = ll(x) , n = ll(n);
