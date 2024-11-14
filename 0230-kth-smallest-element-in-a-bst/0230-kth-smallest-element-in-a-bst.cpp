@@ -11,23 +11,21 @@
  */
 class Solution {
 public:
-    void f(TreeNode* root,priority_queue<int,vector<int>,greater<int>>& pq)
-    {
+    int cnt=0;
+    void f(TreeNode* root,int k,int& ans){
         if(root==nullptr)
-            return ;
-        pq.push(root->val);
-        f(root->left,pq);
-        f(root->right,pq);
-    }
-    int kthSmallest(TreeNode* root, int k) 
-    {
-        priority_queue<int,vector<int>,greater<int>> pq;
-        f(root,pq);
-        k--;
-        while(k--)
-        {
-            pq.pop();
+            return;
+        f(root->left,k,ans);
+        cnt++;
+        if(cnt==k){
+            ans=root->val;
+            return;
         }
-        return pq.top();
+        f(root->right,k,ans);
+    }
+    int kthSmallest(TreeNode* root, int k) {
+        int ans=0;
+        f(root,k,ans);
+        return ans;
     }
 };
