@@ -1,41 +1,39 @@
 class Solution {
 public:
     unordered_map<int,vector<int>> adj;
-    int col[101];
-    int vis[101];
-    bool dfs(int x,int c)
-    {
-       vis[x]=1;
-        col[x]=c;
-        for(auto t: adj[x])
-        {
-            if(vis[t]==0)
-            {
-                bool h=dfs(t,c^1);
-                if(!h)
-                    return false;
+    void dfs(int u,vector<int>& vis,vector<int>& col,int c,bool& res){
+        vis[u]=1;
+        col[u]=c;
+        for(auto v: adj[u]){
+            if(vis[v]==0){
+                dfs(v,vis,col,c^1,res);
             }
-            else if(col[x]==col[t])
-             return false;
+            else{
+                if(col[v]==c){
+                    res=false;
+                    return;
+                }
+            }
         }
-        return true;
     }
-    bool isBipartite(vector<vector<int>>& g) 
-    {
-        for(int i=0;i<g.size();i++)
-        {
-            for(int j=0;j<g[i].size();j++)
-                adj[i].push_back(g[i][j]);
-        }
-        // memset(col,-1,sizeof(col));
-        for(int i=0;i<g.size();i++)
-        {
-            if(vis[i]==0)
-            {
-                if(dfs(i,0)==false)
-                    return false;
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n=graph.size();
+        for(int i=0;i<n;i++){
+            vector<int> tem=graph[i];
+            // cout<<i<<"->"<<endl;
+            for(auto x: tem){
+                // cout<<x<<endl;
+                adj[x].push_back(i);
+                adj[i].push_back(x);
             }
         }
-        return true;
+        vector<int> vis(n),col(n,-1);
+        bool res=true;
+        for(int i=0;i<n;i++){
+            if(vis[i])continue;
+            dfs(i,vis,col,0,res);
+        }
+        return res;
+        
     }
 };
