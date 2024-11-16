@@ -1,30 +1,19 @@
 class Solution {
 public:
-    vector<vector<int>> ans;
-    void f(vector<int>& temp,vector<int>& vis,vector<int>& nums)
-    {
-        if(temp.size()==nums.size())
-        {
-            ans.push_back(temp);
+    void f(int i,vector<int>& nums,vector<vector<int>>& ans){
+        if(i==nums.size()){
+            ans.push_back(nums);
             return ;
         }
-        for(int i=0;i<nums.size();i++)
-        {
-            if(vis[i]==0)
-            {
-                vis[i]=1;
-                temp.push_back(nums[i]);
-                f(temp,vis,nums);
-                temp.pop_back();
-                vis[i]=0;
-            }
+        for(int idx=i;idx<nums.size();idx++){
+            swap(nums[i],nums[idx]);
+            f(i+1,nums,ans);
+            swap(nums[i],nums[idx]);
         }
     }
-    vector<vector<int>> permute(vector<int>& nums) 
-    {
-        vector<int> temp;
-        vector<int> vis(nums.size());
-        f(temp,vis,nums);
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        f(0,nums,ans);
         return ans;
     }
 };
