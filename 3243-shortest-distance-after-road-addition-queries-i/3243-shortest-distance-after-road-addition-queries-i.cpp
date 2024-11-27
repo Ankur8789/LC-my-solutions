@@ -20,13 +20,11 @@ public:
     vector<int> shortestDistanceAfterQueries(int n, vector<vector<int>>& queries) {
         for(int i=0;i<n-1;i++){
             adj[i].push_back(i+1);
-            // adj[i+1].push_back(i);
         }
         vector<int> ans;
         for(auto x: queries){
             int u=x[0],v=x[1];
             adj[u].push_back(v);
-            // adj[v].push_back(u);
             ans.push_back(djk(n));
         }
         return ans;
