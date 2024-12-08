@@ -1,49 +1,32 @@
 class Solution {
 public:
     int dp[100001][3];
-    static bool cmp(vector<int>&a,vector<int>& b)
-    { 
-        if(a[0]==b[0] && a[1]==b[1])
-            return a[2]>b[2];
-        if(a[0]==b[0])
-            return a[1]<b[1];
-        return a[0]<b[0];
-    }
-    int f(int i,vector<vector<int>>&ev,int t)
-    {
-        if(t==0)
+    int f(int i,vector<vector<int>>& e,int cc){
+        if(i==e.size() || cc==2)
             return 0;
-        if(i==ev.size())
-            return 0;
-        if(dp[i][t]!=-1)
-            return dp[i][t];
+        auto& x=dp[i][cc];
+        if(x!=-1)
+            return x;
         int ans=0;
-        ans=max(ans,f(i+1,ev,t));
-        int l=i+1,r=ev.size()-1;
-        int res=-1;
-        while(l<=r)
-        {
+        ans=max(ans,f(i+1,e,cc));
+        int l=i+1,r=e.size()-1,res=e.size();
+        while(l<=r){
             int mid=(l+r)/2;
-            if(ev[mid][0]>ev[i][1])
-            {
+            if(e[mid][0]>e[i][1]){
                 res=mid;
                 r=mid-1;
             }
             else
                 l=mid+1;
         }
-        int temp=ev[i][2];
-        if(res!=-1)
-            temp+=f(res,ev,t-1);
-        ans=max(ans,temp);
-        // cout<<i<<" "<<ans<<endl;
-        return dp[i][t]=ans;
+        ans=max(ans,e[i][2]+f(res,e,cc+1));
+        return x=ans;
     }
-    int maxTwoEvents(vector<vector<int>>& events) 
-    {
-        sort(events.begin(),events.end(),cmp);
+    int maxTwoEvents(vector<vector<int>>& e) {
         memset(dp,-1,sizeof(dp));
-        int ans=f(0,events,2);
+        sort(begin(e),end(e));
+        int n=e.size();
+        int ans=f(0,e,0);
         return ans;
     }
 };
