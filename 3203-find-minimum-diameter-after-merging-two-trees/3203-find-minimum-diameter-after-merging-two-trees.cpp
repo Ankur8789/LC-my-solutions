@@ -24,13 +24,11 @@ public:
     }
     int minimumDiameterAfterMerge(vector<vector<int>>& edges1, vector<vector<int>>& edges2) {
         unordered_map<int,vector<int>> adj1,adj2;
-        for(auto x: edges1)
-        {
+        for(auto x: edges1){
             adj1[x[0]].push_back(x[1]);
             adj1[x[1]].push_back(x[0]);
         }
-        for(auto x: edges2)
-        {
+        for(auto x: edges2){
             adj2[x[0]].push_back(x[1]);
             adj2[x[1]].push_back(x[0]);
         }
